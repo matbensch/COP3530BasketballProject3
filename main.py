@@ -1,5 +1,6 @@
 import io
 import time
+import heapq
 class Node:
     def __init__(self,my_id,my_name):
         self.id = my_id
@@ -32,18 +33,17 @@ def dijkstra(player1):
     for player in graph:
         dist[player] = float("inf")
         prev[player] = 'NULL'
-    q.append(player1)
+    heapq.heappush(q,(0,player1))
     dist[player1] = 0
 
     while (len(q) > 0):
-        cur = q[0]
-        q.remove(cur)
+        cur = heapq.heappop(q)[1]
         for next in graph[cur].adj:
             alt = dist[cur] + 1
             if (alt < dist[next]):
                 dist[next] = alt
                 prev[next] = cur
-                q.append(next)
+                q.append((dist[next],next))
     return (dist,prev)
 
 fin = io.open('graph.txt','r',encoding='utf-8')
