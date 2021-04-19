@@ -32,20 +32,18 @@ def dijkstra(player1):
     for player in graph:
         dist[player] = float("inf")
         prev[player] = 'NULL'
-        q.append(player)
+    q.append(player1)
     dist[player1] = 0
 
     while (len(q) > 0):
         cur = q[0]
-        for player in q:
-             if (dist[player] < dist[cur]):
-                 cur = player
         q.remove(cur)
         for next in graph[cur].adj:
             alt = dist[cur] + 1
             if (alt < dist[next]):
                 dist[next] = alt
                 prev[next] = cur
+                q.append(next)
     return (dist,prev)
 
 fin = io.open('graph.txt','r',encoding='utf-8')
