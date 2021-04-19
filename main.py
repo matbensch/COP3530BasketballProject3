@@ -69,11 +69,11 @@ for id in graph:
 
 player1 = input('Player 1 Name: ').strip()
 while(player1 not in name_to_id):
-    player1 = input('Invalid Name, Try Again: ').split()
+    player1 = input('Invalid Name, Try Again: ').strip()
 
 player2 = input('Player 2 Name: ').strip()
 while(player2 not in name_to_id):
-    player2 = input('Invalid Name, Try Again: ').split()
+    player2 = input('Invalid Name, Try Again: ').strip()
 
 player1_id = name_to_id[player1]
 player2_id = name_to_id[player2]
