@@ -1,12 +1,16 @@
 import io
 import time
 import heapq
+
+#Node class representing a player
 class Node:
     def __init__(self,my_id,my_name):
         self.id = my_id
         self.name = my_name
         self.adj = set()
 
+#breadth first search on graph with source node player1
+#returns a tuple including the distance map and previous map
 def bfs(player1):
     dist = {}
     prev = {}
@@ -26,6 +30,8 @@ def bfs(player1):
                 q.append(next)
     return (dist,prev)
 
+#dijkstras algorithm on graph with source node player1
+#returns a tuple including the distance map and previous map
 def dijkstra(player1):
     dist = {}
     prev = {}
@@ -67,10 +73,12 @@ name_to_id = {}
 for id in graph:
     name_to_id[graph[id].name] = id
 
+#checks that player1 name is valid
 player1 = input('Player 1 Name: ').strip()
 while(player1 not in name_to_id):
     player1 = input('Invalid Name, Try Again: ').strip()
 
+#checks that player2 name is valid
 player2 = input('Player 2 Name: ').strip()
 while(player2 not in name_to_id):
     player2 = input('Invalid Name, Try Again: ').strip()
@@ -79,6 +87,7 @@ player1_id = name_to_id[player1]
 player2_id = name_to_id[player2]
 
 print()
+#runs BFS
 print('BFS:')
 ti = time.perf_counter()
 ret = bfs(player1_id)
@@ -96,6 +105,7 @@ tf = time.perf_counter()-ti
 print('Runtime: '+str(round(tf,3))+' s')
 print()
 
+#runs Dijkstra's
 print('Dijkstra:')
 ti = time.perf_counter()
 ret = dijkstra(player1_id)

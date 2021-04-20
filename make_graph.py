@@ -5,6 +5,7 @@ import bs4
 import urllib.request as req
 import io
 
+#node class representing a player
 class Node:
     def __init__(self,my_id,my_name):
         self.id = my_id
@@ -13,8 +14,10 @@ class Node:
 
 
 fout = io.open('graph.txt','w',encoding='utf-8')
-
+#list of NBA teams
 teams = ['BOS','NJN','CHA','CHI','CLE','DAL','DEN','DET','GSW','HOU','IND','LAC','LAL','MEM','MIA','MIL','MIN','NOH','NYK','OKC','ORL','PHI','PHO','POR','SAC','SAS','TOR','UTA','WAS']
+
+#given a url to a roster page, this function returns an array of tuples with player ids and names
 def getRoster(url):
     page = req.urlopen(url)
     soup = bs(page,features='lxml')
@@ -30,6 +33,7 @@ def getRoster(url):
                 roster.append((str(id),str(name)))
     return roster
 
+#given a team id, this function returns an array of URLs to each of the team's yearly rosters
 def getTeamUrls(team):
     url = 'https://www.basketball-reference.com/teams/'+str(team)
     page = req.urlopen(url)
@@ -40,6 +44,7 @@ def getTeamUrls(team):
         urls.append('https://www.basketball-reference.com'+dir.contents[0]['href'])
     return urls
 
+#returns the graph with players as nodes and being on the same roster as edges
 def makeGraph():
     graph = {}
     for team in teams:
@@ -56,6 +61,8 @@ def makeGraph():
     return graph
 getRoster('https://www.basketball-reference.com/teams/BOS/2020.html')
 graph = makeGraph()
+
+#writes the graph to graph.txt
 fout.write(str(len(graph)) + '\n')
 for player1 in graph:
     fout.write( graph[player1].id+'\n' )
